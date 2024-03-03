@@ -1,0 +1,39 @@
+﻿<Window x:Class="WpfAppMetanit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppMetanit"
+        xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+        
+        <!--В ресурсах окна определяется объект Phone с установкой его свойств Price и Title-->
+        <Window.Resources>
+                <!--Данный ресурс имеет ключ Sasung23S по которому мы можем к нему обратиться--> 
+                <local:Phone Price="600" Title="Sasung 23S" x:Key="Sasung23S"/>
+        </Window.Resources>
+        
+        <!--В контейнере Grid мы задаем этот ресурс как контекст данных-->
+        <Grid x:Name="grid1" DataContext="{StaticResource Sasung23S}" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Model"/>
+                <!--Установка контекста данных позволяет внутри грида привязать отдельные элементы к свойствам ресурса, то есть объекта Phone-->
+                <TextBlock Text="{Binding Title}" Grid.Column="1"/>
+                <TextBlock Text="Price" Grid.Row="1"/>
+                <!--Для TextBox следует двухсторонняя привязка Mode=TwoWay-->
+                <!--А это значит, что любые изменения свойства Price в ресурсе будут отображаться в текстовом поле, и наоборот - любые изменения в текстовом поле будут менять значение в ресурсе-->
+                <!--В этом и состоит одно из преимуществ использования свойств зависимостей - для обычных свойств подобные привязки бы не работали-->
+                <TextBox Text="{Binding Price, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+                <Button Content="Check" Grid.Row="2" Grid.Column="2" Click="ButtonClick"/>
+        </Grid>
+</Window>
